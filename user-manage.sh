@@ -9,15 +9,15 @@ SUBJECT=user-manage
 VERSION=0.1.0
 USAGE="
 USAGE
-    mdtool [-hv] [-add] [-del]
+    user-manage.sh [-hv] [-a] [-d]
 OPTIONS
     -h                               print help information
     -v                               print version
-    -add [username] [password]       build markdown in slide format
-    -del [username]                  build markdown in article format
+    -a [username] [password]         add user & user_dir
+    -d [username]                    del user & user_dir
 EXAMPLES
-    mdtool -add user1 123456
-    mdtool -del user1
+    user-manage.sh -a user1 123456
+    user-manage.sh -d user1
 "
 
 # --- Option processing --------------------------------------------
@@ -37,10 +37,10 @@ while getopts ":vhsa" optname
         echo "$USAGE"
         exit 0;
         ;;
-      "add")
+      "a")
         flag="add"
         ;;
-      "del")
+      "d")
         flag="del"
         ;;
       "?")
@@ -81,11 +81,11 @@ touch $LOCK_FILE
 ### Your Config ###
 password=$1
 username=$2
-home_dir=/data/${username}
+user_dir=/data/${username}
 ### Your Config ###
 
 if [ "$flag" = "add" ]; then
-  useradd $username -m -d $home_dir
+  useradd $username -m -d $user_dir
   echo $password | passwd --stdin $username
 elif [ "$flag" = "del" ]; then
   userdel -r $username
