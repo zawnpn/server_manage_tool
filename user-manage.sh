@@ -26,7 +26,7 @@ if [ $# == 0 ] ; then
     exit 1;
 fi
 
-while getopts ":vhsa" optname
+while getopts ":vhad" optname
   do
     case "$optname" in
       "v")
