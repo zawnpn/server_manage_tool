@@ -82,10 +82,16 @@ touch $LOCK_FILE
 username=$1
 user_dir=/data/${username}
 user_shell=/bin/bash
+docs="\n
+账号: $username\n
+密码: \n
+校内使用: ssh $username@x.x.x.x\n
+校外临时: ssh $username@x.x.x.x -p xxxx\n"
 
 if [ "$flag" = "add" ]; then
   sudo useradd $username -m -d $user_dir -s $user_shell
   sudo passwd $username
+  echo -e $docs
 elif [ "$flag" = "del" ]; then
   sudo userdel -r $username
 fi
