@@ -9,14 +9,14 @@ SUBJECT=user-manage
 VERSION=0.1.0
 USAGE="
 USAGE
-    user-manage.sh [-hv] [-a] [-d]
+    user-manage.sh [-hv] [-ad] username
 OPTIONS
     -h                               print help information
     -v                               print version
-    -a [username] [password]         add user & user_dir
+    -a [username]                    add user & user_dir
     -d [username]                    del user & user_dir
 EXAMPLES
-    user-manage.sh -a user1 123456
+    user-manage.sh -a user1
     user-manage.sh -d user1
 "
 
@@ -79,14 +79,13 @@ touch $LOCK_FILE
 #! /bin/bash
 
 ### Your Config ###
-password=$1
-username=$2
+username=$1
 user_dir=/data/${username}
 ### Your Config ###
 
 if [ "$flag" = "add" ]; then
-  useradd $username -m -d $user_dir
-  echo $password | passwd --stdin $username
+  sudo useradd $username -m -d $user_dir
+  sudo passwd $username
 elif [ "$flag" = "del" ]; then
-  userdel -r $username
+  sudo userdel -r $username
 fi
